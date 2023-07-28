@@ -1,15 +1,17 @@
 package com.example.kangreponce;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+
+import com.google.gson.GsonBuilder;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -30,19 +32,21 @@ public class KangrePonce extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
 
+
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://192.168.137.203:4000/api/")
+                .baseUrl("http://192.168.0.11:4000/api/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
         Vehiculos api = retrofit.create(Vehiculos.class);
 
-        Call<VehiculosClass> vehuculosObject = api.getVehiculoByMarca("Marca");
+        Call<VehiculosClass> vehuculosObject = api.GetID("Toyota");
 
         vehuculosObject.enqueue(new Callback<VehiculosClass>() {
             @Override
             public void onResponse(Call<VehiculosClass> call, Response<VehiculosClass> response) {
                 VehiculosClass vehiculo = (VehiculosClass) response.body();
+
             }
 
             @Override
