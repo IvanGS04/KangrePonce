@@ -31,16 +31,18 @@ public class KangrePonce extends AppCompatActivity {
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-
+        GsonBuilder builder = new GsonBuilder();
+        builder.registerTypeAdapter(VehiculosClass.class, new Desarializer());
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://192.168.0.11:4000/api/")
+                .baseUrl("http://10.0.2.2:4000/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
         Vehiculos api = retrofit.create(Vehiculos.class);
 
-        Call<VehiculosClass> vehuculosObject = api.GetID("Toyota");
+
+        Call<VehiculosClass> vehuculosObject = api.GetAPI("api");
 
         vehuculosObject.enqueue(new Callback<VehiculosClass>() {
             @Override

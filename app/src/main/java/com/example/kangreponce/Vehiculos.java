@@ -6,6 +6,6 @@ import retrofit2.http.Path;
 
 public interface Vehiculos {
 
-@GET("Marca/{Marca}")
-    Call<VehiculosClass> GetID(@Path("Marca") String marca);
+@GET("{api}")
+    Call<VehiculosClass> GetAPI(@Path("api") String api);
 }
