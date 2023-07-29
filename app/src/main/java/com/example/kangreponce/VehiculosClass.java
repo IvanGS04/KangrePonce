@@ -5,30 +5,30 @@ import com.google.gson.GsonBuilder;
 
 public class VehiculosClass {
 
-    private int _id;
+    private String _id;
     private String Marca;
     private String Modelo;
     private String Color;
     private int Precio;
-    private float Year;
+    private String Year;
 
     public VehiculosClass() {
     }
 
-    public VehiculosClass(int _id, String marca, String modelo, String color, int precio, float year) {
+    public VehiculosClass(String _id, String marca, String modelo, String color, int precio, String year) {
         this._id = _id;
-        Marca = marca;
-        Modelo = modelo;
-        Color = color;
-        Precio = precio;
-        Year = year;
+        this.Marca = marca;
+        this.Modelo = modelo;
+        this.Color = color;
+        this.Precio = precio;
+        this.Year = year;
     }
 
-    public int get_id() {
+    public String get_id() {
         return _id;
     }
 
-    public void set_id(int _id) {
+    public void set_id(String _id) {
         this._id = _id;
     }
 
@@ -64,11 +64,11 @@ public class VehiculosClass {
         Precio = precio;
     }
 
-    public float getYear() {
+    public String getYear() {
         return Year;
     }
 
-    public void setYear(float year) {
+    public void setYear(String year) {
         Year = year;
     }
 }
