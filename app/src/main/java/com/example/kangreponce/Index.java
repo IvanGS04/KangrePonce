@@ -18,6 +18,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import com.bumptech.glide.Glide;
 
 public class Index extends AppCompatActivity {
 
@@ -47,7 +48,7 @@ public class Index extends AppCompatActivity {
         progressBar.setVisibility(View.VISIBLE);
 
         Retrofit retrofit = new  Retrofit.Builder()
-                .baseUrl("http://10.20.55.39:3000/")
+                .baseUrl("http://192.168.100.12:3000/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         Comida api = retrofit.create(Comida.class);

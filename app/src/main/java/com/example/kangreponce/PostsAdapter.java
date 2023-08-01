@@ -3,10 +3,13 @@ package com.example.kangreponce;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.bumptech.glide.Glide;
 
 import java.util.List;
 
@@ -31,6 +34,10 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
         holder.nombre.setText(postsList.get(position).getNombre());
         holder.precio.setText(String.valueOf(postsList.get(position).getPrecio()) );
         holder.ingredientes.setText(postsList.get(position).getIngredientes());
+        Glide.with(holder.itemView)
+                .load("http://192.168.100.12:3000/public/"+postsList.get(position).getImgUrl())
+                .into(holder.imageView);
+
 
 
     }
@@ -45,6 +52,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
         TextView nombre;
         TextView precio;
         TextView ingredientes;
+        ImageView imageView;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -52,6 +60,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
             nombre = itemView.findViewById(R.id.nombre);
             precio = itemView.findViewById(R.id.precio);
             ingredientes = itemView.findViewById(R.id.ingredientes);
+            imageView = itemView.findViewById(R.id.imageComida);
 
         }
     }
