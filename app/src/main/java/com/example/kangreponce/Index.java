@@ -4,11 +4,18 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.annotation.SuppressLint;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Toast;
+
+import com.android.volley.toolbox.ImageRequest;
+import com.squareup.picasso.Downloader;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +34,10 @@ public class Index extends AppCompatActivity {
     PostsAdapter adapter;
     List<ComidaClass> postsList = new ArrayList<>();
 
+
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,6 +50,10 @@ public class Index extends AppCompatActivity {
         adapter = new PostsAdapter(postsList);
         recyclerView.setAdapter(adapter);
 
+
+
+
+
         fetchPosts();
 
     }//On create
@@ -47,13 +62,16 @@ public class Index extends AppCompatActivity {
         progressBar.setVisibility(View.VISIBLE);
 
         Retrofit retrofit = new  Retrofit.Builder()
-                .baseUrl("http://10.20.54.9:3000/")
+                .baseUrl("http://192.168.0.21:3000/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         Comida api = retrofit.create(Comida.class);
         Call<List<ComidaClass>> comidaClassCall = api.getPosts();
 
         comidaClassCall.request().url().toString();
+
+
+
 
         comidaClassCall.enqueue(new Callback<List<ComidaClass>>() {
             @Override
