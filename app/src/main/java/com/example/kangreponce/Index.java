@@ -47,7 +47,7 @@ public class Index extends AppCompatActivity {
         progressBar.setVisibility(View.VISIBLE);
 
         Retrofit retrofit = new  Retrofit.Builder()
-                .baseUrl("http://10.20.54.9:3000/")
+                .baseUrl("http://10.20.55.39:3000/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         Comida api = retrofit.create(Comida.class);
