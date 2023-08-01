@@ -13,8 +13,8 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="177dp"
-        android:background="#FF9800"
-        android:backgroundTint="#FF9800"
+        android:background="#FF3D00"
+        android:backgroundTint="#FF3D00"
         android:padding="10dp">
 
 
@@ -38,7 +38,7 @@
             android:layout_marginTop="28dp"
             android:text="precio"
             android:textColor="#131313"
-            android:textSize="16sp"
+            android:textSize="18sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/nombre" />
 
@@ -50,7 +50,7 @@
             android:layout_marginTop="24dp"
             android:text="Ingredientes"
             android:textColor="#090909"
-            android:textSize="16sp"
+            android:textSize="18sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/precio" />
 
@@ -60,21 +60,43 @@
             android:layout_height="99dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.984"
+            app:layout_constraintHorizontal_bias="0.642"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.492"
+            app:layout_constraintVertical_bias="0.192"
             app:srcCompat="@drawable/ic_launcher_foreground" />
+
+        <ImageView
+            android:layout_width="44dp"
+            android:layout_height="43dp"
+            android:src="@drawable/papa"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/imageComida"
+            app:layout_constraintStart_toEndOf="@+id/nombre"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.119" />
+
+        <ImageView
+            android:layout_width="46dp"
+            android:layout_height="55dp"
+            android:src="@drawable/hambu"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.941"
+            app:layout_constraintStart_toEndOf="@+id/imageComida"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.68" />
 
         <Button
             android:id="@+id/button"
-            android:layout_width="75dp"
+            android:layout_width="101dp"
             android:layout_height="39dp"
-            android:backgroundTint="#150BAC"
-            android:text="Button"
+            android:backgroundTint="#FFC400"
+            android:text="Agregar"
             android:textColor="#F1EBEB"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.75"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="1.0" />
