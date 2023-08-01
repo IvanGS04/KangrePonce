@@ -8,6 +8,10 @@
     android:backgroundTint="#F1EEEE"
     tools:context=".RegistroComida">
 
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar" />
+
     <Button
         android:id="@+id/button3"
         android:layout_width="wrap_content"
