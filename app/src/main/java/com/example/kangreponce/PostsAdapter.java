@@ -37,7 +37,6 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
         Glide.with(holder.itemView)
                 .load("http://192.168.100.12:3000/public/"+postsList.get(position).getImgUrl())
                 .into(holder.imageView);
-
     }
 
     @Override

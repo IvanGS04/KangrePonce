@@ -64,11 +64,9 @@ public class RegistroUsuarios extends AppCompatActivity {
 
     private void RegistrarUsuario(String Nombre, String Apellido, int Telefono, String Correo, String Password){
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://192.168.0.21:3000/")
+                .baseUrl("http://192.168.100.12:3000/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
-
-
 
         Usuarios usuarios = retrofit.create(Usuarios.class);
 
@@ -81,8 +79,6 @@ public class RegistroUsuarios extends AppCompatActivity {
                     RegistrosResponse registrosResponse = response.body();
                     Toast.makeText(RegistroUsuarios.this, "Usuario registrado exitosamente", Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(RegistroUsuarios.this, MainActivity.class));
-
-
                 }
                 else {
                     Toast.makeText(RegistroUsuarios.this, "Error al registar ", Toast.LENGTH_SHORT).show();
