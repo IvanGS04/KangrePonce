@@ -13,5 +13,10 @@ public interface Comida {
     @GET("comida/")
     Call<List<ComidaClass>> getPosts();
 
-
+    @POST("comida/")
+    Call<PostComida> createComida(
+            @Field("nombre") String nombre,
+            @Field("ingredientes") String ingredientes,
+            @Field("precio") int precio,
+            @Field("file") String file);
 }
