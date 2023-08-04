@@ -94,29 +94,6 @@ public class Index extends AppCompatActivity {
                 Toast.makeText(Index.this, "ERROR"+ t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
-
-        /*RetrofitClient.getRetrofitClient().getPosts().enqueue(new Callback<List<ComidaClass>>() {
-            ComidaClass.request().url().toString();
-            @Override
-            public void onResponse(Call<List<ComidaClass>> call, Response<List<ComidaClass>> response) {
-                if(response.isSuccessful() && response.body() != null){
-                    postsList.addAll(response.body());
-                    adapter.notifyDataSetChanged();
-                    progressBar.setVisibility(View.GONE);
-
-                }
-
-            }
-
-            @Override
-            public void onFailure(Call<List<ComidaClass>> call, Throwable t) {
-                progressBar.setVisibility(View.GONE);
-                Toast.makeText(Index.this, "ERROR"+ t.getMessage(), Toast.LENGTH_SHORT).show();
-
-            }
-        });//Client
-        */
-
     }//fethPosts
 
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -129,9 +106,7 @@ public class Index extends AppCompatActivity {
         if (item.getItemId() == R.id.registro_comida) {
             VerRegistroComida();
             return false;
-
         } else if (item.getItemId() == R.id.ver_menu_principal) {
-
             VerMenu();
             return false;
         } else {

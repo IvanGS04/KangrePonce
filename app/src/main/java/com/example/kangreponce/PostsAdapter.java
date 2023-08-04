@@ -50,7 +50,6 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
         TextView nombre;
         TextView precio;
         TextView ingredientes;
-
         ImageView imageView;
 
         public ViewHolder(@NonNull View itemView) {
