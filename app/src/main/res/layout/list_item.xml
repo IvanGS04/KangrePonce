@@ -60,10 +60,10 @@
             android:layout_height="99dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.642"
+            app:layout_constraintHorizontal_bias="0.627"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.192"
+            app:layout_constraintVertical_bias="0.064"
             app:srcCompat="@drawable/ic_launcher_foreground" />
 
         <ImageView
@@ -88,9 +88,9 @@
             app:layout_constraintVertical_bias="0.68" />
 
         <Button
-            android:id="@+id/button"
-            android:layout_width="101dp"
-            android:layout_height="39dp"
+            android:id="@+id/btnAgregar"
+            android:layout_width="134dp"
+            android:layout_height="48dp"
             android:backgroundTint="#FFC400"
             android:text="Agregar"
             android:textColor="#F1EBEB"

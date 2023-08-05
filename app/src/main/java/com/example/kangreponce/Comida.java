@@ -18,9 +18,6 @@ public interface Comida {
     @GET("comida/")
     Call<List<ComidaClass>> getPosts();
 
-
-
-
     @Multipart
     @POST("comida/")
     Call<ComidaPOST> addDish(@Part MultipartBody.Part file,

@@ -79,21 +79,22 @@ public class RegistroComida extends AppCompatActivity {
         private void validarComida () {
             String nombre = TXTnombre.getText().toString();
             String ingredientes = TXTingredientes.getText().toString();
-            int precio = Integer.parseInt(TXTprecio.getText().toString());
+            String precio = TXTprecio.getText().toString();
 
-            if( nombre.equals("") || ingredientes.equals("") || precio <= 0 ) {
+            if( nombre.equals("") || ingredientes.equals("") || precio.equals("") ) {
                 Toast.makeText(RegistroComida.this, "Rellena todos los campos vacios ", Toast.LENGTH_SHORT).show();
             }else{
                 registrarComida(nombre,ingredientes,precio);
             }
         }
 
-    private void registrarComida(String nombre, String ingredientes, int precio){
+    private void registrarComida(String nombre, String ingredientes, String precio){
         Retrofit retrofit = new Retrofit.Builder().baseUrl("http://192.168.100.12:3000/")
                 .addConverterFactory(GsonConverterFactory.create()).build();
 
+        if(path != null) {
         File file = new File(path);
-        if(file != null) {
+
             RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
 
             MultipartBody.Part body = MultipartBody.Part.createFormData("file", file.getName(), requestFile);
