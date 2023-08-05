@@ -6,12 +6,17 @@ import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+
+import retrofit2.http.Path;
+
 import retrofit2.http.Part;
+
 
 public interface Comida {
 
@@ -25,6 +30,9 @@ public interface Comida {
                                      @Part("ingredientes") RequestBody ingredientes,
                                      @Part("precio") RequestBody precio);
 
+
+    @DELETE("comida/{id}")
+    Call<Void> eliminarRegistro(@Path("id") String id);
 
 
 

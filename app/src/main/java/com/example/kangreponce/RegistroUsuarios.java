@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import retrofit2.Call;
@@ -32,6 +33,8 @@ public class RegistroUsuarios extends AppCompatActivity {
 
     Button btnRegistrar;
 
+    ImageButton ImageButtonBack;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,6 +46,7 @@ public class RegistroUsuarios extends AppCompatActivity {
         txtCorreoR = findViewById(R.id.txtCorreoR);
         txtPasswordR = findViewById(R.id.txtPasswordR);
         btnRegistrar = findViewById(R.id.button2);
+        ImageButtonBack = findViewById(R.id.ImageButtonBack);
 
 
         btnRegistrar.setOnClickListener(v -> {
@@ -60,11 +64,15 @@ public class RegistroUsuarios extends AppCompatActivity {
 
         });
 
+       ImageButtonBack.setOnClickListener(v -> {
+           startActivity(new Intent(RegistroUsuarios.this, MainActivity.class));
+       });
+
     }
 
     private void RegistrarUsuario(String Nombre, String Apellido, int Telefono, String Correo, String Password){
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://192.168.100.12:3000/")
+                .baseUrl("http://192.168.0.21:3000/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 

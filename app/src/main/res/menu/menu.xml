@@ -9,4 +9,8 @@
 
     <item android:id="@+id/registro_usuarios" android:title="Registro de usuarios" app:showAsAction="never"> </item>
 
+    <item android:id="@+id/admin_comida" android:title="Administrador Comida" app:showAsAction="never"> </item>
+
+    <item android:id="@+id/cerrar_sesion" android:title="Cerrar sesion" app:showAsAction="never"> </item>
+
 </menu>
