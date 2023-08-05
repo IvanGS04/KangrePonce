@@ -33,9 +33,6 @@ public class AdminComida extends AppCompatActivity {
     LinearLayoutManager layoutManager;
     AdapterDelete adapter;
     List<ComidaClass> postsList = new ArrayList<>();
-
-
-
     TextView txtNombre;
     Toolbar toolbar;
 
@@ -67,7 +64,7 @@ public class AdminComida extends AppCompatActivity {
 
         Retrofit retrofit = new  Retrofit.Builder()
 
-                .baseUrl("http://192.168.0.21:3000/")
+                .baseUrl("http://192.168.100.12:3000/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         Comida api = retrofit.create(Comida.class);

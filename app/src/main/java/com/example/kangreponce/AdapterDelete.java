@@ -42,10 +42,6 @@ public class AdapterDelete extends RecyclerView.Adapter<AdapterDelete.ViewHolder
 
     }
 
-
-
-
-
     @Override
     public void onBindViewHolder(@NonNull AdapterDelete.ViewHolder holder, int position) {
 
@@ -54,14 +50,14 @@ public class AdapterDelete extends RecyclerView.Adapter<AdapterDelete.ViewHolder
         holder.precio.setText(String.valueOf(postsList.get(position).getPrecio()) );
         holder.ingredientes.setText(postsList.get(position).getIngredientes());
         Glide.with(holder.itemView)
-                .load("http://192.168.0.21:3000/public/"+postsList.get(position).getImgUrl())
+                .load("http://192.168.100.12:3000/public/"+postsList.get(position).getImgUrl())
                 .into(holder.imageView);
 
         holder.btnDelete.setOnClickListener(v ->{
             String id = postsList.get(position).getId();
 
             Retrofit retrofit = new  Retrofit.Builder()
-                    .baseUrl("http://192.168.0.21:3000/")
+                    .baseUrl("http://192.168.100.12:3000/")
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
             Comida api = retrofit.create(Comida.class);
@@ -73,9 +69,6 @@ public class AdapterDelete extends RecyclerView.Adapter<AdapterDelete.ViewHolder
                 public void onResponse(Call<Void> call, Response<Void> response) {
                     if (response.isSuccessful()) {
                         Toast.makeText(v.getContext(), "Comida eliminada exitosamente", Toast.LENGTH_SHORT).show();
-
-
-
                     } else {
                         Toast.makeText(v.getContext(), "Comida NO eliminada ", Toast.LENGTH_SHORT).show();
                     }
@@ -86,6 +79,10 @@ public class AdapterDelete extends RecyclerView.Adapter<AdapterDelete.ViewHolder
                     Toast.makeText(v.getContext(), "Error en el servidor ", Toast.LENGTH_SHORT).show();
                 }
             });
+        });
+        holder.btnEdit.setOnClickListener( view -> {
+            String id = postsList.get(position).getId();
+
         });
 
     }
@@ -103,8 +100,7 @@ public class AdapterDelete extends RecyclerView.Adapter<AdapterDelete.ViewHolder
         TextView precio;
         TextView ingredientes;
         ImageView imageView;
-
-        Button btnDelete;
+        Button btnDelete, btnEdit;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -114,6 +110,7 @@ public class AdapterDelete extends RecyclerView.Adapter<AdapterDelete.ViewHolder
             ingredientes = itemView.findViewById(R.id.ingredientes);
             imageView = itemView.findViewById(R.id.imageComida);
             btnDelete = itemView.findViewById(R.id.buttonDelete);
+            btnEdit = itemView.findViewById(R.id.buttonEdit);
 
         }
     }

@@ -65,14 +65,7 @@ public class Index extends AppCompatActivity {
         recyclerView.setLayoutManager(layoutManager);
         adapter = new PostsAdapter(postsList);
         recyclerView.setAdapter(adapter);
-        buttonAgregar = findViewById(R.id.buttonAgregar);
-
-
-
-
-
-
-
+        buttonAgregar = findViewById(R.id.btnAgregar);
         fetchPosts();
 
     }//On create
@@ -81,7 +74,7 @@ public class Index extends AppCompatActivity {
         progressBar.setVisibility(View.VISIBLE);
 
         Retrofit retrofit = new  Retrofit.Builder()
-                .baseUrl("http://192.168.0.21:3000/")
+                .baseUrl("http://192.168.100.12:3000/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         Comida api = retrofit.create(Comida.class);
@@ -122,7 +115,6 @@ public class Index extends AppCompatActivity {
             VerMenu();
             return false;
         } else if (item.getItemId() == R.id.admin_comida) {
-
             VerAdminComida();
             return false;
         }

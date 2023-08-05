@@ -60,7 +60,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
         holder.precio.setText(String.valueOf(postsList.get(position).getPrecio()) );
         holder.ingredientes.setText(postsList.get(position).getIngredientes());
         Glide.with(holder.itemView)
-                .load("http://192.168.0.21:3000/public/"+postsList.get(position).getImgUrl())
+                .load("http://192.168.100.12:3000/public/"+postsList.get(position).getImgUrl())
                 .into(holder.imageView);
 
         String nombre = postsList.get(position).getNombre();
