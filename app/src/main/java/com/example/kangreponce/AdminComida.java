@@ -1,11 +1,16 @@
 package com.example.kangreponce;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
@@ -26,39 +31,32 @@ public class AdminComida extends AppCompatActivity {
     RecyclerView recyclerView;
     ProgressBar progressBar;
     LinearLayoutManager layoutManager;
-    PostAdapterAdmin adapter;
+    AdapterDelete adapter;
     List<ComidaClass> postsList = new ArrayList<>();
 
-    Button btnEliminar;
+
 
     TextView txtNombre;
+    Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_comida);
 
+        toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
         recyclerView = findViewById(R.id.recyclerView);
         progressBar = findViewById(R.id.progressBar4);
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
-        adapter = new PostAdapterAdmin(postsList);
+        adapter = new AdapterDelete(postsList);
         recyclerView.setAdapter(adapter);
 
         txtNombre = findViewById(R.id.nombre);
 
-
-
-
-
         fetchPosts();
-
-
-
-
-
-
-
 
     }
 
@@ -118,6 +116,50 @@ public class AdminComida extends AppCompatActivity {
         */
 
     }//fethPosts
+
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == R.id.registro_comida) {
+            VerRegistroComida();
+            return false;
+        } else if (item.getItemId() == R.id.ver_menu_principal) {
+            VerMenu();
+            return false;
+        } else if (item.getItemId() == R.id.admin_comida) {
+
+            VerAdminComida();
+            return false;
+        }
+        else {
+            return super.onOptionsItemSelected(item);
+        }
+    }
+
+
+    void VerRegistroComida(){
+        Intent intent = new Intent(AdminComida.this,RegistroComida.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK |
+                Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+    }
+    void VerMenu(){
+        Intent intent = new Intent(AdminComida.this,Index.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK |
+                Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+    }
+
+    void VerAdminComida(){
+        Intent intent = new Intent(AdminComida.this,AdminComida.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK |
+                Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+    }
 
 
 }

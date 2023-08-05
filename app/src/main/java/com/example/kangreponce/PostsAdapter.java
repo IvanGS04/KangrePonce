@@ -54,8 +54,6 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
                 .load("http://192.168.0.21:3000/public/"+postsList.get(position).getImgUrl())
                 .into(holder.imageView);
 
-
-
     }
 
     @Override
@@ -68,7 +66,6 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
         TextView nombre;
         TextView precio;
         TextView ingredientes;
-
         ImageView imageView;
 
         public ViewHolder(@NonNull View itemView) {

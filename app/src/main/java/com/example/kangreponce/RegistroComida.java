@@ -1,30 +1,43 @@
 package com.example.kangreponce;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.content.Context;
 import android.content.Intent;
+
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.text.TextUtils;
+
+
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
+
 import android.widget.Button;
-import android.widget.EditText;
+
+
+import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.target.SimpleTarget;
-import com.bumptech.glide.request.transition.Transition;
 
-import java.io.ByteArrayOutputStream;
+import android.widget.EditText;
 
+
+import java.io.File;
+
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -32,19 +45,14 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RegistroComida extends AppCompatActivity {
-    Button btnEnviarImagen;
 
-    Button btnRegistrarComida;
+    ImageView imageView;
+    Button btnUpload, btnRegistrar;
     Toolbar toolbar;
+    ActivityResultLauncher<Intent> resultLauncher;
+    EditText TXTnombre, TXTingredientes, TXTprecio;
 
-    EditText TXTnombre;
-    EditText TXTingredientes;
-    EditText TXTprecio;
-
-
-    private static final int REQUEST_CODE_PICK_IMAGE = 1;
-
-    private Uri selectedImageUri;
+    String path;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,79 +61,73 @@ public class RegistroComida extends AppCompatActivity {
 
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        btnEnviarImagen = findViewById(R.id.buttonUploadImage);
-        btnRegistrarComida = findViewById(R.id.button3);
+
+        imageView = findViewById(R.id.imageUpload);
+        btnUpload = findViewById(R.id.btnUpload);
+        btnRegistrar = findViewById(R.id.btnRegistrar);
         TXTnombre = findViewById(R.id.txtnombreP);
         TXTingredientes = findViewById(R.id.txtIngredientes);
         TXTprecio = findViewById(R.id.txtPrecio);
+        registerResult();
 
-        btnEnviarImagen.setOnClickListener(v ->{
-            Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-            startActivityForResult(intent, REQUEST_CODE_PICK_IMAGE);
-        });
+        btnUpload.setOnClickListener( view -> pickImage());
+        btnRegistrar.setOnClickListener(view -> validarComida());
 
-        btnRegistrarComida.setOnClickListener(v -> {
-            String nombre = TXTprecio.getText().toString();
+
+    }//onCreate
+
+        private void validarComida () {
+            String nombre = TXTnombre.getText().toString();
             String ingredientes = TXTingredientes.getText().toString();
             int precio = Integer.parseInt(TXTprecio.getText().toString());
 
-
-
-            if(TextUtils.isEmpty(nombre) || TextUtils.isEmpty(ingredientes) || Integer.toString(precio).isEmpty() ) {
+            if( nombre.equals("") || ingredientes.equals("") || precio <= 0 ) {
                 Toast.makeText(RegistroComida.this, "Rellena todos los campos vacios ", Toast.LENGTH_SHORT).show();
-                return;
+            }else{
+                registrarComida(nombre,ingredientes,precio);
             }
-            if (selectedImageUri == null){
-                Toast.makeText(RegistroComida.this, "Añade una imagen", Toast.LENGTH_SHORT).show();
-                return;
-            }
-            String file = selectedImageUri.toString();
-            RegistrarComida(nombre, ingredientes, precio, file);
-
-
-        });
-
-
-
-    }
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == REQUEST_CODE_PICK_IMAGE && resultCode == RESULT_OK && data != null) {
-            selectedImageUri = data.getData();
-
         }
-    }
 
-    private void RegistrarComida(String nombre, String ingredientes, int precio, String file){
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://192.168.0.21:3000/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
+    private void registrarComida(String nombre, String ingredientes, int precio){
+        Retrofit retrofit = new Retrofit.Builder().baseUrl("http://192.168.0.21:3000/")
+                .addConverterFactory(GsonConverterFactory.create()).build();
 
-        Comida comida = retrofit.create(Comida.class);
+        File file = new File(path);
+        if(file != null) {
+            RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
 
-        Call<ComidaPOST> call = comida.RegistrarComida(new ComidaPOST(nombre, ingredientes, precio, file));
+            MultipartBody.Part body = MultipartBody.Part.createFormData("file", file.getName(), requestFile);
 
-        call.enqueue(new Callback<ComidaPOST>() {
-            @Override
-            public void onResponse(Call<ComidaPOST> call, Response<ComidaPOST> response) {
-                if (response.isSuccessful()) {
-                    ComidaPOST comidaPOST = response.body();
-                    Toast.makeText(RegistroComida.this, "Platillo registrado exitosamente", Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(RegistroComida.this, Index.class));
-                }else{
-                    Toast.makeText(RegistroComida.this, "el platillo no se pudo registrar", Toast.LENGTH_SHORT).show();
+            RequestBody name = RequestBody.create(MediaType.parse("multipart/form-data"), nombre);
+            RequestBody ingre = RequestBody.create(MediaType.parse("multipart/form-data"), ingredientes);
+            RequestBody price = RequestBody.create(MediaType.parse("multipart/form-data"), String.valueOf(precio));
+
+            Comida comida = retrofit.create(Comida.class);
+            Call<ComidaPOST> call = comida.addDish(body, name, ingre, price);
+            call.enqueue(new Callback<ComidaPOST>() {
+                @Override
+                public void onResponse(Call<ComidaPOST> call, Response<ComidaPOST> response) {
+                    if (response.isSuccessful()) {
+
+                        if (response.body().getStatus().toString().equals("200")) {
+                            Toast.makeText(RegistroComida.this, "Platillo Agregado", Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(RegistroComida.this, Index.class);
+                            startActivity(intent);
+                        } else {
+                            Toast.makeText(RegistroComida.this, "not Added", Toast.LENGTH_SHORT).show();
+                        }
+                    }
                 }
+                @Override
+                public void onFailure(Call<ComidaPOST> call, Throwable t) {
+                    Toast.makeText(getApplicationContext(), t.toString(), Toast.LENGTH_SHORT).show();
+                }
+            });
+        }else{
+            Toast.makeText(RegistroComida.this, "Te falta una imagen", Toast.LENGTH_SHORT).show();
+        }
 
-            }
-
-            @Override
-            public void onFailure(Call<ComidaPOST> call, Throwable t) {
-                Toast.makeText(RegistroComida.this, "error en el servidor", Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
+    }//registrar comida
 
 
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -136,29 +138,38 @@ public class RegistroComida extends AppCompatActivity {
 
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.registro_comida) {
-            VerRegistroComida();
+            Intent intent = new Intent(RegistroComida.this, RegistroComida.class);
+            startActivity(intent);
             return false;
-
         } else if (item.getItemId() == R.id.ver_menu_principal) {
-
-            VerMenu();
+            Intent intent = new Intent(RegistroComida.this,Index.class);
+            startActivity(intent);
             return false;
         } else {
             return super.onOptionsItemSelected(item);
         }
     }
-
-
-    void VerRegistroComida(){
-        Intent intent = new Intent(RegistroComida.this, RegistroComida.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK |
-                Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(intent);
+    private void pickImage(){
+        Intent intent = new Intent(MediaStore.ACTION_PICK_IMAGES);
+        resultLauncher.launch(intent);
     }
-    void VerMenu(){
-        Intent intent = new Intent(RegistroComida.this,Index.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK |
-                Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(intent);
+
+    private void registerResult(){
+        resultLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
+                    @Override
+                    public void onActivityResult(ActivityResult result) {
+                        try {
+                            Uri imageUri = result.getData().getData();
+                            Context context = RegistroComida.this;
+                            path = RealPathUtil.getRealPath(context, imageUri);
+                            Bitmap bitmap = BitmapFactory.decodeFile(path);
+                            imageView.setImageURI(imageUri);
+                            //imageview.setImageBitmap(bitmap);
+                        }catch (Exception e){
+                            Toast.makeText(RegistroComida.this, "Imagen no seleccionada", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
     }
-}
+}//Class

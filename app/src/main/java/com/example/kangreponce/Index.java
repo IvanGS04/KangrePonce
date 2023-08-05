@@ -6,7 +6,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.appcompat.widget.Toolbar;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -36,6 +38,7 @@ public class Index extends AppCompatActivity {
     LinearLayoutManager layoutManager;
     PostsAdapter adapter;
     List<ComidaClass> postsList = new ArrayList<>();
+    SharedPreferences sharedPreferences;
 
     Toolbar toolbar;
 
@@ -52,6 +55,9 @@ public class Index extends AppCompatActivity {
 
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        sharedPreferences = getSharedPreferences("Preferences",
+                Context.MODE_PRIVATE);
 
         recyclerView = findViewById(R.id.recyclerView);
         progressBar = findViewById(R.id.progressBar);
@@ -75,7 +81,6 @@ public class Index extends AppCompatActivity {
         progressBar.setVisibility(View.VISIBLE);
 
         Retrofit retrofit = new  Retrofit.Builder()
-
                 .baseUrl("http://192.168.0.21:3000/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
@@ -101,29 +106,6 @@ public class Index extends AppCompatActivity {
                 Toast.makeText(Index.this, "ERROR"+ t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
-
-        /*RetrofitClient.getRetrofitClient().getPosts().enqueue(new Callback<List<ComidaClass>>() {
-            ComidaClass.request().url().toString();
-            @Override
-            public void onResponse(Call<List<ComidaClass>> call, Response<List<ComidaClass>> response) {
-                if(response.isSuccessful() && response.body() != null){
-                    postsList.addAll(response.body());
-                    adapter.notifyDataSetChanged();
-                    progressBar.setVisibility(View.GONE);
-
-                }
-
-            }
-
-            @Override
-            public void onFailure(Call<List<ComidaClass>> call, Throwable t) {
-                progressBar.setVisibility(View.GONE);
-                Toast.makeText(Index.this, "ERROR"+ t.getMessage(), Toast.LENGTH_SHORT).show();
-
-            }
-        });//Client
-        */
-
     }//fethPosts
 
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -136,14 +118,17 @@ public class Index extends AppCompatActivity {
         if (item.getItemId() == R.id.registro_comida) {
             VerRegistroComida();
             return false;
-
         } else if (item.getItemId() == R.id.ver_menu_principal) {
-
             VerMenu();
             return false;
         } else if (item.getItemId() == R.id.admin_comida) {
 
             VerAdminComida();
+            return false;
+        }
+        else if (item.getItemId() == R.id.cerrar_sesion) {
+            eraseSession();
+            logOut();
             return false;
         }
         else {
@@ -171,4 +156,17 @@ public class Index extends AppCompatActivity {
                 Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
     }
+
+    void eraseSession(){
+        sharedPreferences.edit().clear().apply();
+    }
+
+    void logOut(){
+        Intent intent = new Intent(Index.this,MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK |
+                Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+    }
+
+
 }//class

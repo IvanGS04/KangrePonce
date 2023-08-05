@@ -1,16 +1,34 @@
 package com.example.kangreponce;
 
-public class ComidaPOST {
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+import java.util.List;
 
-    private String nombre;
-    private String ingredientes;
-    private int precio;
-    private String file;
 
-    public ComidaPOST(String nombre, String ingredientes, int precio, String file) {
-        this.nombre = nombre;
-        this.ingredientes = ingredientes;
-        this.precio = precio;
-        this.file = file;
-    }
+
+
+    public class ComidaPOST {
+
+        @SerializedName("info")
+        @Expose
+        private List<String> info = null;
+        @SerializedName("status")
+        @Expose
+        private Integer status;
+
+        public List<String> getInfo() {
+            return info;
+        }
+
+        public void setInfo(List<String> info) {
+            this.info = info;
+        }
+
+        public Integer getStatus() {
+            return status;
+        }
+
+        public void setStatus(Integer status) {
+            this.status = status;
+        }
 }
