@@ -1,6 +1,5 @@
 package com.example.kangreponce;
 
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,30 +14,19 @@ import com.bumptech.glide.Glide;
 
 import java.util.List;
 
-
-
-public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> {
-
-
-
-
-
+public class PostAdapterAdmin extends RecyclerView.Adapter<PostsAdapter.ViewHolder> {
 
     private List<ComidaClass> postsList;
 
-    public PostsAdapter(List<ComidaClass> postsList) {
+    public PostAdapterAdmin(List<ComidaClass> postsList) {
         this.postsList = postsList;
     }
-
-
-
     @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public PostsAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.list_item, parent, false);
-        return new ViewHolder(view);
-
+                .inflate(R.layout.list_item_administrador, parent, false);
+        return new PostsAdapter.ViewHolder(view);
 
 
     }
@@ -46,7 +34,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
 
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull PostsAdapter.ViewHolder holder, int position) {
         holder.nombre.setText(postsList.get(position).getNombre());
         holder.precio.setText(String.valueOf(postsList.get(position).getPrecio()) );
         holder.ingredientes.setText(postsList.get(position).getIngredientes());
@@ -71,6 +59,8 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
 
         ImageView imageView;
 
+        Button btnEliminar;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
@@ -78,10 +68,9 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
             precio = itemView.findViewById(R.id.precio);
             ingredientes = itemView.findViewById(R.id.ingredientes);
             imageView = itemView.findViewById(R.id.imageComida);
+            btnEliminar = itemView.findViewById(R.id.buttonDelete);
 
         }
     }
-
-
 
 }

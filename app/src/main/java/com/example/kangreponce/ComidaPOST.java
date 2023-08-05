@@ -1,6 +1,7 @@
 package com.example.kangreponce;
 
 public class ComidaPOST {
+
     private String nombre;
     private String ingredientes;
     private int precio;
