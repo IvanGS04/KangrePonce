@@ -1,24 +1,17 @@
 package com.example.kangreponce;
 
-<<<<<<< HEAD
-import static android.content.Context.MODE_PRIVATE;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.view.Gravity;
-=======
-import android.content.Intent;
->>>>>>> f5b2a3f1e738bff02f8c5131feabcebb7fc12224
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-<<<<<<< HEAD
+
 import android.widget.EditText;
-=======
->>>>>>> f5b2a3f1e738bff02f8c5131feabcebb7fc12224
+
 import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
@@ -31,26 +24,15 @@ import com.bumptech.glide.Glide;
 
 import java.util.List;
 
-<<<<<<< HEAD
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
-=======
-
->>>>>>> f5b2a3f1e738bff02f8c5131feabcebb7fc12224
 
 public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> {
 
 
-<<<<<<< HEAD
-=======
-
-
-
-
->>>>>>> f5b2a3f1e738bff02f8c5131feabcebb7fc12224
     private List<ComidaClass> postsList;
 
     public PostsAdapter(List<ComidaClass> postsList) {
@@ -81,15 +63,12 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
                 .load("http://192.168.0.21:3000/public/"+postsList.get(position).getImgUrl())
                 .into(holder.imageView);
 
-<<<<<<< HEAD
         String nombre = postsList.get(position).getNombre();
         int precio = postsList.get(position).getPrecio();
 
         // Set an OnClickListener to show the popup window when the item is clicked
         holder.btnAgregar.setOnClickListener(view -> showPopupWindow(holder.itemView,nombre, precio));
 
-=======
->>>>>>> f5b2a3f1e738bff02f8c5131feabcebb7fc12224
     }
 
     @Override
