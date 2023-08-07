@@ -13,6 +13,7 @@ import retrofit2.http.GET;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
 
 import retrofit2.http.Part;
@@ -34,7 +35,7 @@ public interface Comida {
     @DELETE("comida/{id}")
     Call<Void> eliminarRegistro(@Path("id") String id);
 
-
-
+    @PUT("comida/{id}")
+    Call<ComidaEdit> updateDish(@Path("id") String id, @Body ComidaEdit comidaEdit);
 
 }
