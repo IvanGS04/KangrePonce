@@ -96,13 +96,19 @@ public class MainActivity extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     LoginResponse loginResponse = response.body();
                     String mensaje = loginResponse.getMessage();
+                    String status = response.body().getStatus();
 
-                    if (mensaje.equals(mensaje)) {
+                    if (mensaje.equals("login succesful") && status.equals("200")) {
                         SharedPreferences sharedPreferences = getSharedPreferences("MyPreferences", Context.MODE_PRIVATE);
                         SharedPreferences.Editor editor = sharedPreferences.edit();
-                            editor.putString("correo", Correo);
+                        editor.putString("correo", Correo);
                         editor.putString("password", Password);
                         editor.putBoolean("remind", recordar.isChecked());
+                        if (Correo.equals("admin@correo.com")){
+                            editor.putBoolean("admin", true);
+                        }else{
+                            editor.putBoolean("admin", false);
+                        }
                         editor.apply();
 
                         startActivity(new Intent(MainActivity.this, Index.class));

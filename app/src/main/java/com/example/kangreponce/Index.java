@@ -56,8 +56,13 @@ public class Index extends AppCompatActivity {
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        sharedPreferences = getSharedPreferences("Preferences",
-                Context.MODE_PRIVATE);
+        sharedPreferences = getSharedPreferences("Preferences", Context.MODE_PRIVATE);
+        boolean admin = sharedPreferences.getBoolean("admin", false);
+        /*if(admin){
+            menuAdmin();
+        }else{
+            menuUser();
+        }*/
 
         recyclerView = findViewById(R.id.recyclerView);
         progressBar = findViewById(R.id.progressBar);
@@ -70,43 +75,26 @@ public class Index extends AppCompatActivity {
 
     }//On create
 
-    private void  fetchPosts(){
-        progressBar.setVisibility(View.VISIBLE);
-
-        Retrofit retrofit = new  Retrofit.Builder()
-                .baseUrl("http://192.168.100.12:3000/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-        Comida api = retrofit.create(Comida.class);
-        Call<List<ComidaClass>> comidaClassCall = api.getPosts();
-
-        comidaClassCall.request().url().toString();
-
-        comidaClassCall.enqueue(new Callback<List<ComidaClass>>() {
-            @Override
-            public void onResponse(Call<List<ComidaClass>> call, Response<List<ComidaClass>> response) {
-                if(response.isSuccessful() && response.body() != null){
-                    postsList.addAll(response.body());
-                    adapter.notifyDataSetChanged();
-                    progressBar.setVisibility(View.GONE);
-
-                }
-            }
-
-            @Override
-            public void onFailure(Call<List<ComidaClass>> call, Throwable t) {
-                progressBar.setVisibility(View.GONE);
-                Toast.makeText(Index.this, "ERROR"+ t.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
-    }//fethPosts
-
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu, menu);
-        return super.onCreateOptionsMenu(menu);
+    public boolean checkAdmin(){
+        sharedPreferences = getSharedPreferences("MyPreferences", Context.MODE_PRIVATE);
+        boolean admin = sharedPreferences.getBoolean("admin", false);
+        return admin;
     }
 
+    public boolean onCreateOptionsMenu(Menu menu) {
+        boolean check = checkAdmin();
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu, menu);
+        if(check != true){
+            MenuItem registroComidaItem = menu.findItem(R.id.registro_comida);
+            registroComidaItem.setVisible(false);
+            MenuItem registroUserItem = menu.findItem(R.id.registro_usuarios);
+            registroUserItem.setVisible(false);
+            MenuItem crudItem = menu.findItem(R.id.admin_comida);
+            crudItem.setVisible(false);
+        }
+        return super.onCreateOptionsMenu(menu);
+    }
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.registro_comida) {
             VerRegistroComida();
@@ -160,5 +148,34 @@ public class Index extends AppCompatActivity {
         startActivity(intent);
     }
 
+    private void  fetchPosts(){
+        progressBar.setVisibility(View.VISIBLE);
 
+        Retrofit retrofit = new  Retrofit.Builder()
+                .baseUrl("http://192.168.100.12:3000/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        Comida api = retrofit.create(Comida.class);
+        Call<List<ComidaClass>> comidaClassCall = api.getPosts();
+
+        comidaClassCall.request().url().toString();
+
+        comidaClassCall.enqueue(new Callback<List<ComidaClass>>() {
+            @Override
+            public void onResponse(Call<List<ComidaClass>> call, Response<List<ComidaClass>> response) {
+                if(response.isSuccessful() && response.body() != null){
+                    postsList.addAll(response.body());
+                    adapter.notifyDataSetChanged();
+                    progressBar.setVisibility(View.GONE);
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<ComidaClass>> call, Throwable t) {
+                progressBar.setVisibility(View.GONE);
+                Toast.makeText(Index.this, "ERROR"+ t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }//fethPosts
 }//class
