@@ -89,7 +89,7 @@ public class RegistroComida extends AppCompatActivity {
         }
 
     private void registrarComida(String nombre, String ingredientes, String precio){
-        Retrofit retrofit = new Retrofit.Builder().baseUrl("http://192.168.100.12:3000/")
+        Retrofit retrofit = new Retrofit.Builder().baseUrl("http://10.20.39.219:3000/")
                 .addConverterFactory(GsonConverterFactory.create()).build();
 
         if(path != null) {

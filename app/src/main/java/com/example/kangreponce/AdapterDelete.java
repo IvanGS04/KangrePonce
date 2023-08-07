@@ -54,7 +54,7 @@ public class AdapterDelete extends RecyclerView.Adapter<AdapterDelete.ViewHolder
         holder.precio.setText(String.valueOf(postsList.get(position).getPrecio()));
         holder.ingredientes.setText(postsList.get(position).getIngredientes());
         Glide.with(holder.itemView)
-                .load("http://192.168.100.12:3000/public/" + postsList.get(position).getImgUrl())
+                .load("http://10.20.39.219:3000/public/" + postsList.get(position).getImgUrl())
                 .into(holder.imageView);
 
         holder.btnDelete.setOnClickListener(view -> {
@@ -150,7 +150,7 @@ public class AdapterDelete extends RecyclerView.Adapter<AdapterDelete.ViewHolder
                     Toast.makeText(view.getContext(), "Moodifica al menos un campo", Toast.LENGTH_SHORT).show();
                 } else {
                     Retrofit retrofit = new Retrofit.Builder()
-                            .baseUrl("http://192.168.100.12:3000/")
+                            .baseUrl("http://10.20.39.219:3000/")
                             .addConverterFactory(GsonConverterFactory.create())
                             .build();
 
@@ -214,7 +214,7 @@ public class AdapterDelete extends RecyclerView.Adapter<AdapterDelete.ViewHolder
             @Override
             public void onClick(View view) {
                 Retrofit retrofit = new Retrofit.Builder()
-                        .baseUrl("http://192.168.100.12:3000/")
+                        .baseUrl("http://10.20.39.219:3000/")
                         .addConverterFactory(GsonConverterFactory.create())
                         .build();
                 Comida api = retrofit.create(Comida.class);

@@ -41,16 +41,14 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
 
 
 
-    @NonNull
-    @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.list_item, parent, false);
-        return new ViewHolder(view);
+        @NonNull
+        @Override
+        public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+            View view = LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.list_item, parent, false);
+            return new ViewHolder(view);
 
-
-
-    }
+        }
 
 
 
@@ -60,7 +58,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
         holder.precio.setText(String.valueOf(postsList.get(position).getPrecio()) );
         holder.ingredientes.setText(postsList.get(position).getIngredientes());
         Glide.with(holder.itemView)
-                .load("http://192.168.100.12:3000/public/"+postsList.get(position).getImgUrl())
+                .load("http://10.20.39.219:3000/public/"+postsList.get(position).getImgUrl())
                 .into(holder.imageView);
 
         String nombre = postsList.get(position).getNombre();
@@ -135,7 +133,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
                     SharedPreferences sharedPreferences = getSharedPreferences("MyPreferences", view.getContext());
                     String cliente = sharedPreferences.getString("correo", "");
                     Retrofit retrofit = new Retrofit.Builder()
-                            .baseUrl("http://192.168.100.12:3000/")
+                            .baseUrl("http://10.20.39.219:3000/")
                             .addConverterFactory(GsonConverterFactory.create())
                             .build();
 

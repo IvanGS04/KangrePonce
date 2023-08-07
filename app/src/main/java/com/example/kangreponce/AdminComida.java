@@ -64,7 +64,7 @@ public class AdminComida extends AppCompatActivity {
 
         Retrofit retrofit = new  Retrofit.Builder()
 
-                .baseUrl("http://192.168.100.12:3000/")
+                .baseUrl("http://10.20.39.219:3000/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         Comida api = retrofit.create(Comida.class);

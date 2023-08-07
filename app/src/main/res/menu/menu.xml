@@ -5,7 +5,7 @@
 
     <item android:id="@+id/ver_menu_principal" android:title="Ver menu principal" app:showAsAction="never"> </item>
 
-    <item android:id="@+id/registro_usuarios" android:title="Ver pedidos" app:showAsAction="never"> </item>
+    <item android:id="@+id/ver_pedidos" android:title="Ver pedidos" app:showAsAction="never"> </item>
 
     <item android:id="@+id/registro_comida" android:title="Registro de comida" app:showAsAction="never"> </item>
 

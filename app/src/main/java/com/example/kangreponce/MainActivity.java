@@ -83,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void loginUser(String Correo, String Password) {
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://192.168.100.12:3000/")
+                .baseUrl("http://10.20.39.219:3000/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 

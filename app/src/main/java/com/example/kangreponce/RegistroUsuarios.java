@@ -72,7 +72,7 @@ public class RegistroUsuarios extends AppCompatActivity {
 
     private void RegistrarUsuario(String Nombre, String Apellido, int Telefono, String Correo, String Password){
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://192.168.100.12:3000/")
+                .baseUrl("http://10.20.39.219:3000/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
